@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>URL Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="inputUrl">Input URL</label>
+  <textarea id="inputUrl" placeholder="Paste input URL here..."></textarea>
+
+  <label for="outputUrl">Output URL</label>
+  <textarea id="outputUrl" readonly placeholder="Converted URL will appear here..."></textarea>
+
+  <button id="copyBtn">Copy to Clipboard</button>
+
+  <script>
+    const input = document.getElementById("inputUrl");
+    const output = document.getElementById("outputUrl");
+    const copyBtn = document.getElementById("copyBtn");
+
+    input.addEventListener("input", () => {
+      let value = input.value;
+
+      if (!value) {
+        output.value = "";
+        return;
+      }
+
+      value = value.replace(
+        "http://localhost:8091/signature-front-ws/signature/",
+        "http://localhost:8088/signature-front-web/"
+      );
+
+      output.value = value;
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!output.value) return;
+
+      try {
+        await navigator.clipboard.writeText(output.value);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => copyBtn.textContent = "Copy to Clipboard", 1500);
+      } catch (err) {
+        alert("Copy failed. Please copy manually.");
+      }
+    });
+  </script>
+
+</body>
+</html>
