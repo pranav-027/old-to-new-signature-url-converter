@@ -37,11 +37,13 @@
   <textarea id="outputUrl" readonly placeholder="Converted URL will appear here..."></textarea>
 
   <button id="copyBtn">Copy to Clipboard</button>
+  <button id="openUrlBtn">Open URL</button>
 
   <script>
     const input = document.getElementById("inputUrl");
     const output = document.getElementById("outputUrl");
     const copyBtn = document.getElementById("copyBtn");
+    const openUrlBtn = document.getElementById("openUrlBtn");
 
     input.addEventListener("input", () => {
       let value = input.value;
@@ -69,6 +71,12 @@
       } catch (err) {
         alert("Copy failed. Please copy manually.");
       }
+    });
+
+    openUrlBtn.addEventListener("click", () => {
+      if (!output.value) return;
+
+      window.open(output.value, "_blank");
     });
   </script>
 
